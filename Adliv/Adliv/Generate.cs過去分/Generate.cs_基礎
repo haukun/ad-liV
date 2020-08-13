@@ -1,0 +1,298 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+using AdlivMusic;
+using System.Windows.Forms;
+using System.IO;
+
+namespace Adliv
+{
+    class Generate
+    {
+        static Random r = new Random();
+
+        public static void Exec()
+        {
+            if (!Directory.Exists("output"))
+            {
+                Directory.CreateDirectory("output");
+            }
+
+            string vsq4Path = String.Format("{0}\\{1}{2}", "output", DateTime.Now.ToString("yyyyMMdd-HHmmss"), "-adliv.vsqx");
+            string midiPath = String.Format("{0}\\{1}{2}", "output", DateTime.Now.ToString("yyyyMMdd-HHmmss"), "-adliv.midi");
+
+            AdlivVsq4 vsq4 = new AdlivVsq4(vsq4Path, "BCNFCY43LB2LZCD4", "MIKU_V4X_Original_EVEC", "BFPL93T7GE3RWFC9", "ACA9C502-A04B-42b5-B2EB-5CEA36D16FCE", "VlNDSwAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=");
+            //AdlivVsq4 vsq4 = new AdlivVsq4(vsq4Path, "a", "MIKU_V4X_Original_EVEC", "c", "d", "e");
+            AdlivMidi midi = new AdlivMidi(midiPath);
+
+            AdlivVsq4.vsTrack[] vTrack = new AdlivVsq4.vsTrack[5];
+            vTrack[0] = vsq4.CreateTrack();
+            vTrack[1] = vsq4.CreateTrack();
+            vTrack[2] = vsq4.CreateTrack();
+            vTrack[3] = vsq4.CreateTrack();
+            vTrack[4] = vsq4.CreateTrack();
+
+            AdlivMidi.MidiTrack[] mTrack = new AdlivMidi.MidiTrack[16];
+            mTrack[0] = midi.CreateTrack(AdlivMidi.TONE.T001_PIANO_ACOUSTIC_PIANO);
+            mTrack[1] = midi.CreateTrack(AdlivMidi.TONE.T001_PIANO_ACOUSTIC_PIANO);
+            mTrack[2] = midi.CreateTrack(AdlivMidi.TONE.T001_PIANO_ACOUSTIC_PIANO);
+            mTrack[3] = midi.CreateTrack(AdlivMidi.TONE.T042_STRINGS_VIOLA);
+            mTrack[4] = midi.CreateTrack(AdlivMidi.TONE.T042_STRINGS_VIOLA);
+            mTrack[5] = midi.CreateTrack(AdlivMidi.TONE.T042_STRINGS_VIOLA);
+            mTrack[6] = midi.CreateTrack(AdlivMidi.TONE.T074_PIPE_FLUTE);
+            mTrack[7] = midi.CreateTrack(AdlivMidi.TONE.T074_PIPE_FLUTE);
+            mTrack[8] = midi.CreateTrack(AdlivMidi.TONE.T074_PIPE_FLUTE);
+            mTrack[9] = midi.CreateTrack(AdlivMidi.TONE.T001_PIANO_ACOUSTIC_PIANO);
+            mTrack[10] = midi.CreateTrack(AdlivMidi.TONE.T097_SYNTH_EFFECTS_RAIN);
+            mTrack[11] = midi.CreateTrack(AdlivMidi.TONE.T097_SYNTH_EFFECTS_RAIN);
+            mTrack[12] = midi.CreateTrack(AdlivMidi.TONE.T097_SYNTH_EFFECTS_RAIN);
+            mTrack[13] = midi.CreateTrack(AdlivMidi.TONE.T047_STRINGS_ORCHESTRAL_HARP);
+            mTrack[14] = midi.CreateTrack(AdlivMidi.TONE.T047_STRINGS_ORCHESTRAL_HARP);
+            mTrack[15] = midi.CreateTrack(AdlivMidi.TONE.T047_STRINGS_ORCHESTRAL_HARP);
+
+
+
+
+            List<CHORD> chords = new List<CHORD>();
+            chords.AddRange(AdlivMusicPlus.CHORD001_Basic);
+            chords.AddRange(AdlivMusicPlus.CHORD003_Basic);
+            chords.AddRange(AdlivMusicPlus.CHORD018_Canon);
+            chords.AddRange(AdlivMusicPlus.CHORD035_Basic);
+
+
+            for (int k = 0; k < 4; k++)
+            {
+                for (int i = 0; i < chords.Count; i++)
+                {
+                    Hum4(vTrack[0], chords[i], AdlivMusicPlus.VOICES);
+                    Hum4(vTrack[1], chords[i], AdlivMusicPlus.VOICES);
+                    Hum4(vTrack[2], chords[i], AdlivMusicPlus.VOICES);
+                    Hum4(vTrack[3], chords[i], AdlivMusicPlus.VOICES, 0);
+                    Hum4(vTrack[4], chords[i], AdlivMusicPlus.VOICES, 0);
+
+                    Play8(mTrack[0], chords[i], 1);
+                    Play8(mTrack[1], chords[i], 1);
+                    Play8(mTrack[2], chords[i], 0);
+                    Play8(mTrack[3], chords[i], 2);
+                    Play8(mTrack[4], chords[i], 1);
+                    Play8(mTrack[5], chords[i], 0);
+                    Play8(mTrack[6], chords[i], 1);
+                    Play8(mTrack[7], chords[i], 1);
+                    Play8(mTrack[8], chords[i], 2);
+                    Play8(mTrack[10], chords[i], 1);
+                    Play8(mTrack[11], chords[i], 2);
+                    Play8(mTrack[12], chords[i], 1);
+                    Play8(mTrack[13], chords[i], 1);
+                    Play8(mTrack[14], chords[i], 2);
+                    Play8(mTrack[15], chords[i], 3);
+
+                    Perc4(mTrack[9]);
+                }
+            }
+
+            vTrack[0].AddNote(NOTEL.N1x2, NOTE.G2, "ra");
+            vTrack[1].AddNote(NOTEL.N1x2, NOTE.C3, "ra");
+            vTrack[2].AddNote(NOTEL.N1x2, NOTE.E3, "ra");
+            vTrack[3].AddNote(NOTEL.N1x2, NOTE.E2, "ra");
+            vTrack[4].AddNote(NOTEL.N1x2, NOTE.C4, "ra");
+            mTrack[0].AddNote(NOTEL.N1x2, NOTE.C3, 64);
+            mTrack[1].AddNote(NOTEL.N1x2, NOTE.E3, 64);
+            mTrack[2].AddNote(NOTEL.N1x2, NOTE.G3, 64);
+            mTrack[3].AddNote(NOTEL.N1x2, NOTE.C2, 64);
+            mTrack[4].AddNote(NOTEL.N1x2, NOTE.E2, 64);
+            mTrack[5].AddNote(NOTEL.N1x2, NOTE.G2, 64);
+            mTrack[6].AddNote(NOTEL.N1x2, NOTE.C3, 64);
+            mTrack[7].AddNote(NOTEL.N1x2, NOTE.C3, 64);
+            mTrack[8].AddNote(NOTEL.N1x2, NOTE.C3, 64);
+            mTrack[10].AddNote(NOTEL.N1x2, NOTE.C3, 20);
+            mTrack[11].AddNote(NOTEL.N1x2, NOTE.C3, 20);
+            mTrack[12].AddNote(NOTEL.N1x2, NOTE.C3, 20);
+            mTrack[13].AddNote(NOTEL.N1x2, NOTE.C3, 64);
+            mTrack[14].AddNote(NOTEL.N1x2, NOTE.C3, 64);
+            mTrack[15].AddNote(NOTEL.N1x2, NOTE.C3, 64);
+
+            midi.Write();
+            vsq4.Write();
+        }
+
+        private static void Play4(AdlivMidi.MidiTrack track, CHORD chord, int oct = 1)
+        {
+            int pattern = r.Next(2);
+
+            switch (pattern)
+            {
+                case 0:
+                    track.AddNote(NOTEL.N4, AdlivMusicPlus.GetChord(chord, oct), 64);
+                    track.AddNote(NOTEL.N4, AdlivMusicPlus.GetChord(chord, oct), 64);
+                    break;
+                case 1:
+                    track.AddNote(NOTEL.N2, AdlivMusicPlus.GetChord(chord, oct), 64);
+                    break;
+            }
+        }
+        private static void Play8(AdlivMidi.MidiTrack track, CHORD chord, int oct = 1)
+        {
+            int pattern = r.Next(2);
+
+            switch (pattern)
+            {
+                case 0:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (r.Next(8) < 6)
+                        {
+                            if (r.Next(4) < 3)
+                            {
+                                track.AddNote(NOTEL.N8, AdlivMusicPlus.GetChord(chord, oct), 64);
+                            }
+                            else
+                            {
+                                track.AddNote(NOTEL.N16, AdlivMusicPlus.GetChord(chord, oct), 64);
+                                track.AddNote(NOTEL.N16, AdlivMusicPlus.GetChord(chord, oct), 64);
+                            }
+                        }
+                        else
+                        {
+                            track.AddNote(NOTEL.N8, AdlivMusicPlus.GetChord(chord, oct), 0);
+                        }
+                    }
+                    break;
+                case 1:
+                    track.AddNote(NOTEL.N4, AdlivMusicPlus.GetChord(chord, oct), 64);
+                    track.AddNote(NOTEL.N4, AdlivMusicPlus.GetChord(chord, oct), 64);
+                    break;
+            }
+        }
+
+        private static void Perc4(AdlivMidi.MidiTrack track)
+        {
+            AdlivMidi.PNOTE[] pb = new AdlivMidi.PNOTE[] {   AdlivMidi.PNOTE.LOW_TOM1, AdlivMidi.PNOTE.LOW_TOM2,
+                                                                AdlivMidi.PNOTE.MID_TOM1, AdlivMidi.PNOTE.MID_TOM2,
+                                                                AdlivMidi.PNOTE.HIGH_TOM1, AdlivMidi.PNOTE.HIGH_TOM2,
+                                                                AdlivMidi.PNOTE.SNARE_DRUM1, AdlivMidi.PNOTE.SNARE_DRUM2,
+                                                                AdlivMidi.PNOTE.BASS_DRUM1
+            
+            };
+
+            AdlivMidi.PNOTE[] pc = new AdlivMidi.PNOTE[] {      AdlivMidi.PNOTE.RIDE_CYMBAL1, AdlivMidi.PNOTE.RIDE_CYMBAL2,
+                                                                AdlivMidi.PNOTE.CRASH_CYMBAL1, AdlivMidi.PNOTE.CRASH_CYMBAL2,
+                                                                AdlivMidi.PNOTE.SPLASH_CYMBAL
+            };
+
+            int pattern = r.Next(5);
+            int rb1 = r.Next(pb.Length);
+            int rb2 = r.Next(pb.Length);
+            int rc = r.Next(pc.Length);
+
+            switch (pattern)
+            {
+                case 0:
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N8, (r.Next(8) >= 6) ? pc[rc] : pb[rb1], 100);
+                    break;
+                case 1:
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N8, (r.Next(8) >= 6) ? pc[rc] : pb[rb2], 100);
+                    break;
+                case 2:
+                    track.AddNote(NOTEL.N8, (r.Next(8) >= 6) ? pc[rc] : pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    break;
+                case 3:
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb1], 100);
+                    track.AddNote(NOTEL.N8, (r.Next(8) >= 6) ? pc[rc] : pb[rb1], 100);
+                    break;
+                case 4:
+                    track.AddNote(NOTEL.N8, (r.Next(8) >= 6) ? pc[rc] : pb[rb1], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N16, pb[rb2], 100);
+                    track.AddNote(NOTEL.N8, (r.Next(8) >= 6) ? pc[rc] : pb[rb1], 100);
+                    break;
+            }
+        }
+
+        private static void Hum4(AdlivVsq4.vsTrack track, CHORD chord, string[] voices, int oct = 1)
+        {
+            int pattern = r.Next(4);
+
+            switch (pattern)
+            {
+                case 0:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (r.Next(8) < 6)
+                        {
+                            if (r.Next(4) < 3)
+                            {
+                                track.AddNote(NOTEL.N8, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                            }
+                            else
+                            {
+                                track.AddNote(NOTEL.N16, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                                track.AddNote(NOTEL.N16, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                            }
+                        }
+                        else
+                        {
+                            track.AddRest(NOTEL.N8);
+                        }
+                    }
+                    break;
+                case 1:
+                    track.AddNote(NOTEL.N4, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                    track.AddNote(NOTEL.N4, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                    break;
+                case 2:
+                    track.AddNote(NOTEL.N2, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                    break;
+                case 3:
+                    if (r.Next(2) < 1)
+                    {
+                        track.AddNote(NOTEL.N6, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                        track.AddNote(NOTEL.N6, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                        track.AddNote(NOTEL.N6, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                    }
+                    else
+                    {
+                        track.AddNote(NOTEL.N8, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                        track.AddNote(NOTEL.N4, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                        track.AddNote(NOTEL.N8, AdlivMusicPlus.GetChord(chord, oct), voices[r.Next(voices.Length)]);
+                    }
+                    break;
+            }
+        }
+    }
+}

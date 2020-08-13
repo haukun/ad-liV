@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7A50F845-DA50-4FAE-8BFF-304615293D63}</ProjectGuid>
+    <ProjectGuid>{B8E61BCA-5707-4470-B2C2-B821EB95D625}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AdlivLib</RootNamespace>
-    <AssemblyName>AdlivLib</AssemblyName>
+    <RootNamespace>AdlivMusicPlus</RootNamespace>
+    <AssemblyName>AdlivMusicPlus</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,11 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdlivMidi.cs" />
-    <Compile Include="AdlivMusic.cs" />
-    <Compile Include="AdlivMusic2.cs" />
-    <Compile Include="AdlivVsq4.cs" />
+    <Compile Include="AdlivMusicPlus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdlivLib\AdlivMusic.csproj">
+      <Project>{7A50F845-DA50-4FAE-8BFF-304615293D63}</Project>
+      <Name>AdlivMusic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

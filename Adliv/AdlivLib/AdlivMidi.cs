@@ -9,7 +9,7 @@ using System.IO;
 ///                                     はぅ君
 ///##################################################
 
-namespace AdlivMusic
+namespace AdlivMusic2
 {
     public class AdlivMidi
     {
@@ -310,7 +310,7 @@ namespace AdlivMusic
         public class MidiTrack
         {
             TONE tone;  //  音色
-            List<MidiNote> noteList = new List<MidiNote>(); //  音符リスト
+            List<MidiNote> NoteList = new List<MidiNote>(); //  音符リスト
             int mDelta = 0;     //  現在のデルタタイム
             int mTrackNo = 0;   //  トラック番号
 
@@ -327,27 +327,39 @@ namespace AdlivMusic
 
             /// <summary>
             /// 音符の追加
-            /// </summary>
-            /// <param name="notel"></param>
-            /// <param name="note"></param>
+            /// <param name="NOTEl"></param>
+            /// <param name="NOTE"></param>
             /// <param name="vel"></param>
-            public void AddNote(NOTEL notel, NOTE note, int vel)
+            public void AddNote(NOTE _note)
             {
                 //  発音
-                noteList.Add(new MidiNote(mDelta, notel, note, vel));
-                mDelta += (int)notel;
+                NoteList.Add(new MidiNote(_note.mLength, _note.mPitch, _note.mVel, mDelta));
+                mDelta += (int)_note.mLength;
 
                 //  消音
-                noteList.Add(new MidiNote(mDelta, NOTEL.N4, note, 0));
+                NoteList.Add(new MidiNote(LENGTH.N4, _note.mPitch, 0, mDelta));
             }
-            public void AddNote(NOTEL notel, PNOTE note, int vel)
-            {
-                //  発音
-                noteList.Add(new MidiNote(mDelta, notel, (NOTE)note, vel));
-                mDelta += (int)notel;
 
-                //  消音
-                noteList.Add(new MidiNote(mDelta, NOTEL.N4, (NOTE)note, 0));
+            public void AddNote(NOTE[] _note)
+            {
+                foreach(NOTE note in _note)
+                {
+                    //  発音
+                    NoteList.Add(new MidiNote(note.mLength, note.mPitch, note.mVel, mDelta));
+                }
+                mDelta += (int)_note[0].mLength;
+
+                foreach (NOTE note in _note)
+                {
+                    //  消音
+                    NoteList.Add(new MidiNote(LENGTH.N4, note.mPitch, 0, mDelta));
+                }
+
+            }
+
+            public void AddRest(LENGTH length)
+            {
+                mDelta += (int)length;
             }
             
             public int GetTrackNo()
@@ -362,61 +374,48 @@ namespace AdlivMusic
             {
                 int result = -1;
 
-                if (noteList.Count > 0)
+                if (NoteList.Count > 0)
                 {
-                    result = noteList[0].GetDelta();
+                    result = NoteList[0].mDelta;
                 }
 
                 return result;
             }
-            public byte[] GetNextNote(int delta = 0)
+            public byte[] GetNextNOTE(int delta = 0)
             {
                 List<byte> bytes = new List<byte>();
 
-                if (noteList.Count > 0)
+                if (NoteList.Count > 0)
                 {
-                    MidiNote note = noteList[0];
+                    MidiNote note = NoteList[0];
 
                     bytes.AddRange(GetDeltaTime(delta));
                     bytes.Add((byte)(0x90 | mTrackNo)); //  発音
-                    bytes.Add((byte)note.GetNote()); //  音程
-                    bytes.Add((byte)note.GetVel()); //  ベロシティ
+                    bytes.Add((byte)note.mPitch); //  音程
+                    bytes.Add((byte)note.mVel); //  ベロシティ
 
-                    noteList.RemoveAt(0);
+                    NoteList.RemoveAt(0);
                 }
                 return bytes.ToArray();
             }
-            public int GetNoteCount()
+            public int GetNOTECount()
             {
-                return noteList.Count;
+                return NoteList.Count;
             }
         }
 
-        private class MidiNote
+        private class MidiNote : NOTE
         {
-            int delta;
-            NOTEL notel;
-            NOTE note;
-            int vel;
-            public MidiNote(int _delta, NOTEL _notel, NOTE _note, int _vel)
+            public int mDelta;
+            public MidiNote(LENGTH _length, PITCH _pitch, int _delta) :base(_length, _pitch)
             {
-                note = _note;
-                delta = _delta;
-                notel = _notel;
-                vel = _vel;
+                mDelta = _delta;
             }
-            public int GetDelta()
+            public MidiNote(LENGTH _length, PITCH _pitch, int _vel, int _delta) : base(_length, _pitch, _vel)
             {
-                return delta;
+                mDelta = _delta;
             }
-            public NOTE GetNote()
-            {
-                return note;
-            }
-            public int GetVel()
-            {
-                return vel;
-            }
+
         }
 
 
@@ -484,7 +483,7 @@ namespace AdlivMusic
 
                 bool isFirst = true;
                 List<MidiTrack> removeList = new List<MidiTrack>();
-                //  Note
+                //  NOTE
                 foreach (MidiTrack track in mTrackList)
                 {
                     while (track.GetNextDelta() == minDelta && minDelta != -1)
@@ -497,11 +496,11 @@ namespace AdlivMusic
                             preDelta = track.GetNextDelta();
                         }
 
-                        mWriteByteBuffer.AddRange(track.GetNextNote(nowDelta));
+                        mWriteByteBuffer.AddRange(track.GetNextNOTE(nowDelta));
                         nowDelta = 0;
                     }
 
-                    if (track.GetNoteCount() == 0)
+                    if (track.GetNOTECount() == 0)
                     {
                         removeList.Add(track);
                     }

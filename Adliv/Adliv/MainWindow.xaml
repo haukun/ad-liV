@@ -1,0 +1,11 @@
+﻿<Window x:Class="Adliv.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <Label Name="SavePathLabel" Content=""></Label>
+            <Button Content="閉じる" Click="PlayButton_Click" Height="300"/>
+        </StackPanel>
+    </Grid>
+</Window>

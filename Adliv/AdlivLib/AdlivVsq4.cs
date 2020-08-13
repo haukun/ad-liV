@@ -10,7 +10,7 @@ using System.IO;
 ///                                     はぅ君
 ///##################################################
 ///
-namespace AdlivMusic
+namespace AdlivMusic2
 {
     /// <summary>
     /// Root
@@ -36,7 +36,7 @@ namespace AdlivMusic
             {"ha", new Vocal("は", "h a")},  {"hi", new Vocal("ひ", "C i")},   {"hu", new Vocal("ふ", "p\\ M")}, {"he", new Vocal("へ", "h e")},  {"ho", new Vocal("ほ", "h o")},
             {"ma", new Vocal("ま", "m a")},  {"mi", new Vocal("み", "m' i")},  {"mu", new Vocal("む", "m M")},   {"me", new Vocal("め", "m e")},  {"mo", new Vocal("も", "m o")},
             {"ya", new Vocal("や", "j a")},                                    {"yu", new Vocal("ゆ", "j M")},                                    {"yo", new Vocal("よ", "j o")},
-            {"ra", new Vocal("ら", "r a")},  {"ri", new Vocal("り", "4' i")},  {"ru", new Vocal("る", "4 M")},   {"re", new Vocal("れ", "4 e")},  {"ro", new Vocal("ろ", "4 o")},
+            {"ra", new Vocal("ら", "4 a")},  {"ri", new Vocal("り", "4' i")},  {"ru", new Vocal("る", "4 M")},   {"re", new Vocal("れ", "4 e")},  {"ro", new Vocal("ろ", "4 o")},
             {"wa", new Vocal("わ", "w a")},                                                                                                       {"wo", new Vocal("を", "o")},
             {"n", new Vocal("ん", "n")},
             {"ga", new Vocal("が", "g a")},  {"gi", new Vocal("ぎ", "g' i")},  {"gu", new Vocal("ぐ", "g M")},   {"ge", new Vocal("げ", "g e")},  {"go", new Vocal("ご", "g o")},
@@ -44,7 +44,47 @@ namespace AdlivMusic
             {"da", new Vocal("だ", "d a")},  {"di", new Vocal("ぢ", "dZ i")},  {"du", new Vocal("づ", "dz M")},  {"de", new Vocal("で", "d e")},  {"do", new Vocal("ど", "d o")},
             {"ba", new Vocal("ば", "b a")},  {"bi", new Vocal("び", "b' i")},  {"bu", new Vocal("ぶ", "b M")},   {"be", new Vocal("べ", "b e")},  {"bo", new Vocal("ぼ", "b o")},
             {"pa", new Vocal("ぱ", "p a")},  {"pi", new Vocal("ぴ", "p' i")},  {"pu", new Vocal("ぷ", "p M")},   {"pe", new Vocal("ぺ", "p e")},  {"po", new Vocal("ぽ", "p o")},
+            {"kya", new Vocal("きゃ", "k' a")}, {"kyu", new Vocal("きゅ", "k' M")}, {"kyo", new Vocal("きょ", "k' o")},
+            {"gya", new Vocal("ぎゃ", "g' a")}, {"gyu", new Vocal("ぎゅ", "g' M")}, {"gyo", new Vocal("ぎょ", "g' o")},
+            {"sya", new Vocal("しゃ", "S a")}, {"syu", new Vocal("しゅ", "S M")}, {"she", new Vocal("しぇ", "S e")}, {"syo", new Vocal("しょ", "S o")},
+            {"tya", new Vocal("ちゃ", "tS a")}, {"tyu", new Vocal("ちゅ", "tS M")}, {"the", new Vocal("ちぇ", "tS e")}, {"tyo", new Vocal("ちょ", "tS o")},
+            {"zya", new Vocal("じゃ", "dZ a")}, {"zyu", new Vocal("じゅ", "dZ M")}, {"zhe", new Vocal("じぇ", "dZ e")}, {"zyo", new Vocal("じょ", "dZ o")},
+            {"hya", new Vocal("ひゃ", "C a")}, {"hyu", new Vocal("ふゅ", "C M")}, {"hhe", new Vocal("ひぇ", "C e")}, {"hyo", new Vocal("ひょ", "C o")},
+            {"bya", new Vocal("びゃ", "b' a")}, {"byu", new Vocal("びゅ", "b' M")}, {"bhe", new Vocal("びぇ", "b' e")}, {"byo", new Vocal("びょ", "b' o")},
+            {"pya", new Vocal("ぴゃ", "p' a")}, {"pyu", new Vocal("ぴゅ", "p' M")}, {"phe", new Vocal("ぴぇ", "p' e")}, {"pyo", new Vocal("ぴょ", "p' o")},
+            {"fa", new Vocal("ふぁ", "p\\ a")}, {"fi", new Vocal("ふぃ", "p\\' i")}, {"fu", new Vocal("ふゅ", "p\' M")}, {"fe", new Vocal("ふぇ", "p\\ e")}, {"fo", new Vocal("ふぉ", "p\\ o")},
+
+            {"ア", new Vocal("あ", "a")},    {"イ", new Vocal("い", "i")},          {"ウ", new Vocal("う", "M")},         {"エ", new Vocal("え", "e")},    {"オ", new Vocal("お", "o")},
+            {"カ", new Vocal("か", "k a")},  {"キ", new Vocal("き", "k' i")},       {"ク", new Vocal("く", "k M")},       {"ケ", new Vocal("け", "k e")},  {"コ", new Vocal("こ", "k o")},
+            {"サ", new Vocal("さ", "s a")},  {"シ", new Vocal("し", "S i")},        {"ス", new Vocal("す", "k M")},       {"セ", new Vocal("せ", "s e")},  {"ソ", new Vocal("そ", "s o")},
+            {"タ", new Vocal("た", "t a")},  {"チ", new Vocal("ち", "tS i")},       {"ツ", new Vocal("つ", "ts M")},      {"テ", new Vocal("て", "t e")},  {"ト", new Vocal("と", "t o")},
+            {"ナ", new Vocal("な", "n a")},  {"ニ", new Vocal("に", "J i")},        {"ヌ", new Vocal("ぬ", "n M")},       {"ネ", new Vocal("ね", "n e")},  {"ノ", new Vocal("の", "n o")},
+            {"ハ", new Vocal("は", "h a")},  {"ヒ", new Vocal("ひ", "C i")},        {"フ", new Vocal("ふ", "p\\ M")},     {"ヘ", new Vocal("へ", "h e")},  {"ホ", new Vocal("ほ", "h o")},
+            {"マ", new Vocal("ま", "m a")},  {"ミ", new Vocal("み", "m' i")},       {"ム", new Vocal("む", "m M")},       {"メ", new Vocal("め", "m e")},  {"モ", new Vocal("も", "m o")},
+            {"ヤ", new Vocal("や", "j a")},                                         {"ユ", new Vocal("ゆ", "j M")},                                        {"ヨ", new Vocal("よ", "j o")},
+            {"ラ", new Vocal("ら", "4 a")},  {"リ", new Vocal("り", "4' i")},       {"ル", new Vocal("る", "4 M")},       {"レ", new Vocal("れ", "4 e")},  {"ロ", new Vocal("ろ", "4 o")},
+            {"ワ", new Vocal("わ", "w a")},                                                                                                                {"ヲ", new Vocal("を", "o")},
+            {"ン", new Vocal("ん", "n")},
+            {"ガ", new Vocal("が", "g a")},  {"ギ", new Vocal("ぎ", "g' i")},       {"グ", new Vocal("ぐ", "g M")},       {"ゲ", new Vocal("げ", "g e")},  {"ゴ", new Vocal("ご", "g o")},
+            {"ザ", new Vocal("ざ", "dz a")}, {"ジ", new Vocal("じ", "dZ i")},       {"ズ", new Vocal("ず", "dz M")},      {"ゼ", new Vocal("ぜ", "dz e")}, {"ゾ", new Vocal("ぞ", "dz o")},
+            {"ダ", new Vocal("だ", "d a")},  {"ヂ", new Vocal("ぢ", "dZ i")},       {"ヅ", new Vocal("づ", "dz M")},      {"デ", new Vocal("で", "d e")},  {"ド", new Vocal("ど", "d o")},
+            {"バ", new Vocal("ば", "b a")},  {"ビ", new Vocal("び", "b' i")},       {"ブ", new Vocal("ぶ", "b M")},       {"ベ", new Vocal("べ", "b e")},  {"ボ", new Vocal("ぼ", "b o")},
+            {"パ", new Vocal("ぱ", "p a")},  {"ピ", new Vocal("ぴ", "p' i")},       {"プ", new Vocal("ぷ", "p M")},       {"ペ", new Vocal("ぺ", "p e")},  {"ポ", new Vocal("ぽ", "p o")},
+            {"キャ", new Vocal("きゃ", "k' a")}, {"キュ", new Vocal("きゅ", "k' M")}, {"キョ", new Vocal("きょ", "k' o")},
+            {"ギャ", new Vocal("ぎゃ", "g' a")}, {"ギュ", new Vocal("ぎゅ", "g' M")}, {"ギョ", new Vocal("ぎょ", "g' o")},
+            {"シャ", new Vocal("しゃ", "S a")}, {"シュ", new Vocal("しゅ", "S M")}, {"シェ", new Vocal("しぇ", "S e")}, {"ショ", new Vocal("しょ", "S o")},
+            {"チャ", new Vocal("ちゃ", "tS a")}, {"チュ", new Vocal("ちゅ", "tS M")}, {"チェ", new Vocal("ちぇ", "tS e")}, {"チョ", new Vocal("ちょ", "tS o")},
+            {"ジャ", new Vocal("じゃ", "dZ a")}, {"ジュ", new Vocal("じゅ", "dZ M")}, {"ジェ", new Vocal("じぇ", "dZ e")}, {"ジョ", new Vocal("じょ", "dZ o")},
+            {"ヒャ", new Vocal("ひゃ", "C a")}, {"ヒュ", new Vocal("ふゅ", "C M")}, {"ヒェ", new Vocal("ひぇ", "C e")}, {"ヒョ", new Vocal("ひょ", "C o")},
+            {"ビャ", new Vocal("びゃ", "b' a")}, {"ビュ", new Vocal("びゅ", "b' M")}, {"ビェ", new Vocal("びぇ", "b' e")}, {"ビョ", new Vocal("びょ", "b' o")},
+            {"ピャ", new Vocal("ぴゃ", "p' a")}, {"ピュ", new Vocal("ぴゅ", "p' M")}, {"ピェ", new Vocal("ぴぇ", "p' e")}, {"ピョ", new Vocal("ぴょ", "p' o")},
+            {"ファ", new Vocal("ふぁ", "p\\ a")}, {"フィ", new Vocal("ふぃ", "p\\' i")}, {"フュ", new Vocal("ふゅ", "p\' M")}, {"フェ", new Vocal("ふぇ", "p\\ e")}, {"フォ", new Vocal("ふぉ", "p\\ o")},
+
         };
+
+        public static char[] VoiceSmall = {'ァ', 'ィ', 'ゥ', 'ェ', 'ォ', 'ャ', 'ュ', 'ョ', 'ヶ', 'ッ'};
+
+
 
         /// <summary>
         /// Voice
@@ -507,22 +547,35 @@ namespace AdlivMusic
 
             }
 
+            private class Vsq4Note : NOTE
+            {
+                public string mVoice;
+                public Vsq4Note(LENGTH _length, PITCH _pitch, string _voice) :base(_length, _pitch)
+                {
+                    mVoice = _voice;
+                }
+                public Vsq4Note(LENGTH _length, PITCH _pitch, int _vel,  string _voice) : base(_length, _pitch, _vel)
+                {
+                    mVoice = _voice;
+                }
+            }
+
             /// <summary>
             /// 音符の追加
             /// </summary>
             /// <param name="_dur"></param>
             /// <param name="_n"></param>
             /// <param name="_voice"></param>
-            public void AddNote(NOTEL _dur, NOTE _n, string _voice)
+            public void AddNote(NOTE _note, string _voice)
             {
-                vsPart.AddNote(new note(_dur, _n, _voice));
+                vsPart.AddNote(new note(_note.mLength, _note.mPitch, _voice));
             }
 
             /// <summary>
             /// 休符の追加
             /// </summary>
             /// <param name="_dur"></param>
-            public void AddRest(NOTEL _dur)
+            public void AddRest(LENGTH _dur)
             {
                 vsPart.AddRest((int)_dur);
             }
@@ -558,8 +611,8 @@ namespace AdlivMusic
                 pStyle = _pStyle;
                 singer _singer = new singer();
                 singer = _singer;
-                List<note> _note = new List<note>();
-                note = _note;
+                List<note> _NOTE = new List<note>();
+                note = _NOTE;
             }
 
             /// <summary>
@@ -701,7 +754,7 @@ namespace AdlivMusic
         }
 
         /// <summary>
-        /// note
+        /// NOTE
         /// vsq4 - vsTrack - vsPart - note
         /// </summary>
         public class note
@@ -710,11 +763,11 @@ namespace AdlivMusic
             {
                 Initialize();
             }
-            public note(NOTEL _dur, NOTE _n, string voice)
+            public note(LENGTH _dur, PITCH _n, string voice)
             {
                 Initialize(_dur, _n, voice);
             }
-            public void Initialize(NOTEL _dur = NOTEL.N1, NOTE _n = NOTE.x, string voice = "")
+            public void Initialize(LENGTH _dur = LENGTH.N1, PITCH _n = PITCH.x, string voice = "")
             {
                 dur = (int)_dur;
                 n = (int)_n;
@@ -744,7 +797,7 @@ namespace AdlivMusic
 
         /// <summary>
         /// nStyle
-        /// vsq4 - vsTrack - vsPart - note - nStyle
+        /// vsq4 - vsTrack - vsPart - NOTE - nStyle
         /// </summary>
         public class nStyle
         {
@@ -777,7 +830,7 @@ namespace AdlivMusic
 
         /// <summary>
         /// seq
-        /// vsq4 - vsTrack - vsPart - note - nStyle - seq
+        /// vsq4 - vsTrack - vsPart - NOTE - nStyle - seq
         /// </summary>
         public class seq
         {
@@ -803,7 +856,7 @@ namespace AdlivMusic
 
         /// <summary>
         /// cc
-        /// vsq4 - vsTrack - vsPart - note - nStyle - seq - cc
+        /// vsq4 - vsTrack - vsPart - NOTE - nStyle - seq - cc
         /// </summary>
         public class cc
         {
